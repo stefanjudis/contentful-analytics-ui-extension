@@ -2,6 +2,11 @@
 <html>
   <head>
     <title>Contentful Analytics UI-extension</title>
+    <link
+      rel="stylesheet"
+      href="https://contentful.github.io/ui-extensions-sdk/cf-extension.css"
+    />
+    <script src="https://contentful.github.io/ui-extensions-sdk/cf-extension-api.js"></script>
   </head>
   <body>
     <section id="auth-button"></section>
@@ -25,45 +30,49 @@
         };
       })(window, document, 'script');
 
-      gapi.analytics.ready(function() {
-        const CLIENT_ID = '...';
+      window.contentfulExtension.init(
+        ({ contentType, field, entry, parameters }) => {
+          gapi.analytics.ready(function() {
+            const CLIENT_ID = '...';
 
-        gapi.analytics.auth.authorize({
-          container: 'auth-button',
-          clientid: CLIENT_ID
-        });
+            gapi.analytics.auth.authorize({
+              container: 'auth-button',
+              clientid: parameters.instance.clientId
+            });
 
-        const viewSelector = new gapi.analytics.ViewSelector({
-          container: 'view-selector'
-        });
+            const viewSelector = new gapi.analytics.ViewSelector({
+              container: 'view-selector'
+            });
 
-        const timeline = new gapi.analytics.googleCharts.DataChart({
-          reportType: 'ga',
-          query: {
-            dimensions: 'ga:date',
-            metrics: 'ga:sessions',
-            'start-date': '30daysAgo',
-            'end-date': 'yesterday'
-          },
-          chart: {
-            type: 'LINE',
-            container: 'timeline'
-          }
-        });
+            const timeline = new gapi.analytics.googleCharts.DataChart({
+              reportType: 'ga',
+              query: {
+                dimensions: 'ga:date',
+                metrics: 'ga:sessions',
+                'start-date': '30daysAgo',
+                'end-date': 'yesterday'
+              },
+              chart: {
+                type: 'LINE',
+                container: 'timeline'
+              }
+            });
 
-        gapi.analytics.auth.on('success', function(response) {
-          viewSelector.execute();
-        });
+            gapi.analytics.auth.on('success', function(response) {
+              viewSelector.execute();
+            });
 
-        viewSelector.on('change', function(ids) {
-          const newIds = {
-            query: {
-              ids: ids
-            }
-          };
-          timeline.set(newIds).execute();
-        });
-      });
+            viewSelector.on('change', function(ids) {
+              const newIds = {
+                query: {
+                  ids: ids
+                }
+              };
+              timeline.set(newIds).execute();
+            });
+          });
+        }
+      );
     </script>
   </body>
 </html>
