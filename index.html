@@ -89,8 +89,11 @@
           });
         });
 
+        console.log(gapi.analytics.auth);
+
         document.getElementById('signOff').addEventListener('click', () => {
           gapi.analytics.auth.signOut();
+          window.location.reload();
         });
       });
     </script>
