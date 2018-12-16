@@ -31,9 +31,10 @@
       })(window, document, 'script');
 
       window.contentfulExtension.init(
-        ({ contentType, field, entry, extension }) => {
+        ({ contentType, field, entry, parameters }) => {
+          console.log(parameters);
           gapi.analytics.ready(function() {
-            const clientId = extension.parameters.instance.clientId;
+            const clientId = parameters.instance.clientId;
             console.log(clientId);
 
             gapi.analytics.auth.authorize({
