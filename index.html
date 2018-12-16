@@ -7,13 +7,6 @@
       href="https://contentful.github.io/ui-extensions-sdk/cf-extension.css"
     />
     <script src="https://unpkg.com/contentful-ui-extensions-sdk@3"></script>
-    <script src="https://ga-dev-tools.appspot.com/public/javascript/embed-api/components/date-range-selector.js"></script>
-  </head>
-  <body>
-    <div id="date-range-selector"></div>
-    <section id="timeline"></section>
-    <section id="auth-button"></section>
-    <button id="signOff">Log out</button>
     <script>
       (function(w, d, s, g, js, fjs) {
         g = w.gapi || (w.gapi = {});
@@ -31,7 +24,15 @@
           g.load('analytics');
         };
       })(window, document, 'script');
-
+    </script>
+    <script src="https://ga-dev-tools.appspot.com/public/javascript/embed-api/components/date-range-selector.js"></script>
+  </head>
+  <body>
+    <div id="date-range-selector"></div>
+    <section id="timeline"></section>
+    <section id="auth-button"></section>
+    <button id="signOff">Log out</button>
+    <script>
       window.contentfulExtension.init(({ entry, parameters, window }) => {
         window.startAutoResizer();
         const {
