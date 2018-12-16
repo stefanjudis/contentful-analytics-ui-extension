@@ -48,7 +48,7 @@
             'isAuthorized',
             '+***********************'
           );
-          if (gapi.analytics.auth.isAuthorized) {
+          if (gapi.analytics.auth.isAuthorized()) {
             const startRange = {
               'start-date': '30daysAgo',
               'end-date': 'today'
