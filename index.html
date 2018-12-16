@@ -43,6 +43,11 @@
         } = parameters.instance;
 
         gapi.analytics.ready(() => {
+          console.log(
+            gapi.analytics.auth.isAuthorized,
+            'isAuthorized',
+            '+***********************'
+          );
           if (gapi.analytics.auth.isAuthorized) {
             const startRange = {
               'start-date': '30daysAgo',
