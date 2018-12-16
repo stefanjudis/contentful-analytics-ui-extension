@@ -30,15 +30,11 @@
         };
       })(window, document, 'script');
 
-      window.contentfulExtension.init(extension => {
-        console.log(extension);
+      window.contentfulExtension.init(({ parameters }) => {
         gapi.analytics.ready(() => {
-          const clientId = parameters.instance.clientId;
-          console.log(clientId);
-
           gapi.analytics.auth.authorize({
             container: 'auth-button',
-            clientid
+            clientid: parameters.instance.clientId
           });
 
           const viewSelector = new gapi.analytics.ViewSelector({
