@@ -3,6 +3,7 @@
   "id": "cf-google-analytics",
   "fieldTypes": ["Boolean"],
   "src": "https://contentful-analytics.netlify.com",
+  "sidebar": true,
   "parameters": {
     "instance": [
       {
