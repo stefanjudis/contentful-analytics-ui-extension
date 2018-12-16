@@ -48,57 +48,54 @@
             'isAuthorized',
             '+***********************'
           );
-          if (gapi.analytics.auth.isAuthorized()) {
-            const startRange = {
-              'start-date': '30daysAgo',
-              'end-date': 'today'
-            };
+          gapi.analytics.auth.authorize({
+            container: 'auth-button',
+            clientid
+          });
+          const startRange = {
+            'start-date': '30daysAgo',
+            'end-date': 'today'
+          };
 
-            const dateRangeSelector = new gapi.analytics.ext.DateRangeSelector({
-              container: 'date-range-selector'
-            })
-              .set(startRange)
-              .execute();
+          const dateRangeSelector = new gapi.analytics.ext.DateRangeSelector({
+            container: 'date-range-selector'
+          })
+            .set(startRange)
+            .execute();
 
-            const timeline = new gapi.analytics.googleCharts.DataChart({
-              reportType: 'ga',
-              query: {
-                ...{
-                  ids: viewId,
-                  dimensions: 'ga:date',
-                  metrics: 'ga:sessions',
-                  filters: `ga:pagePath==/${
-                    prefix ? `${prefix}/` : ''
-                  }${entry.fields[slugId].getValue()}/`
-                },
-                ...startRange
+          const timeline = new gapi.analytics.googleCharts.DataChart({
+            reportType: 'ga',
+            query: {
+              ...{
+                ids: viewId,
+                dimensions: 'ga:date',
+                metrics: 'ga:sessions',
+                filters: `ga:pagePath==/${
+                  prefix ? `${prefix}/` : ''
+                }${entry.fields[slugId].getValue()}/`
               },
-              chart: {
-                type: 'LINE',
-                container: 'timeline',
-                options: {
-                  width: '100%',
-                  backgroundColor: '#f7f9fa'
-                }
+              ...startRange
+            },
+            chart: {
+              type: 'LINE',
+              container: 'timeline',
+              options: {
+                width: '100%',
+                backgroundColor: '#f7f9fa'
               }
-            });
+            }
+          });
 
-            timeline.execute();
+          timeline.execute();
 
-            dateRangeSelector.on('change', function(data) {
-              timeline.set({ query: data }).execute();
-            });
+          dateRangeSelector.on('change', function(data) {
+            timeline.set({ query: data }).execute();
+          });
 
-            document.getElementById('signOff').addEventListener('click', () => {
-              gapi.analytics.auth.signOut();
-              window.location.reload();
-            });
-          } else {
-            gapi.analytics.auth.authorize({
-              container: 'auth-button',
-              clientid
-            });
-          }
+          document.getElementById('signOff').addEventListener('click', () => {
+            gapi.analytics.auth.signOut();
+            window.location.reload();
+          });
         });
       });
     </script>
