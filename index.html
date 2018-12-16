@@ -10,7 +10,6 @@
   </head>
   <body>
     <section id="auth-button"></section>
-    <section id="view-selector"></section>
     <section id="timeline"></section>
     <script>
       (function(w, d, s, g, js, fjs) {
@@ -37,13 +36,10 @@
             clientid: parameters.instance.clientId
           });
 
-          const viewSelector = new gapi.analytics.ViewSelector({
-            container: 'view-selector'
-          });
-
           const timeline = new gapi.analytics.googleCharts.DataChart({
             reportType: 'ga',
             query: {
+              ids: 'a104150131w155618084p157258229',
               dimensions: 'ga:date',
               metrics: 'ga:sessions',
               'start-date': '30daysAgo',
