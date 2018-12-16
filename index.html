@@ -33,11 +33,12 @@
       window.contentfulExtension.init(
         ({ contentType, field, entry, parameters }) => {
           gapi.analytics.ready(function() {
-            const CLIENT_ID = '...';
+            const clientId = parameters.instance.clientId;
+            console.log(clientId);
 
             gapi.analytics.auth.authorize({
               container: 'auth-button',
-              clientid: parameters.instance.clientId
+              clientid
             });
 
             const viewSelector = new gapi.analytics.ViewSelector({
