@@ -1,0 +1,17 @@
+{
+  "name": "Contentful Analytics Extension",
+  "id": "cf-google-analytics",
+  "fieldTypes": ["Boolean"],
+  "src": "https://contentful-analytics.netlify.com",
+  "parameters": {
+    "instance": [
+      {
+        "id": "clientId",
+        "name": "Analytics Client ID",
+        "description": "Client ID to access Google analytics -> ",
+        "type": "Symbol",
+        "required": true
+      }
+    ]
+  }
+}
