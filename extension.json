@@ -11,6 +11,13 @@
         "description": "Client ID to access Google analytics -> ",
         "type": "Symbol",
         "required": true
+      },
+      {
+        "id": "viewId",
+        "name": "Analytics View ID",
+        "description": "View ID to access Google analytics -> ",
+        "type": "Symbol",
+        "required": true
       }
     ]
   }

@@ -30,16 +30,18 @@
       })(window, document, 'script');
 
       window.contentfulExtension.init(({ parameters }) => {
+        const { clientId: clientid, viewId } = parameters.instance;
+
         gapi.analytics.ready(() => {
           gapi.analytics.auth.authorize({
             container: 'auth-button',
-            clientid: parameters.instance.clientId
+            clientid
           });
 
           const timeline = new gapi.analytics.googleCharts.DataChart({
             reportType: 'ga',
             query: {
-              ids: 'a104150131w155618084p157258229',
+              ids: viewId,
               dimensions: 'ga:date',
               metrics: 'ga:sessions',
               'start-date': '30daysAgo',
