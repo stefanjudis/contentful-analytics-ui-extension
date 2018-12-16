@@ -19,6 +19,20 @@
         "description": "View ID to access Google analytics -> ",
         "type": "Symbol",
         "required": true
+      },
+      {
+        "id": "prefix",
+        "name": "URL path prefix",
+        "description": "URL path preview to query for the right results",
+        "type": "Symbol",
+        "required": false
+      },
+      {
+        "id": "slugId",
+        "name": "Slug field ID",
+        "description": "Field that holds path information to query for the right path",
+        "type": "Symbol",
+        "required": true
       }
     ]
   }

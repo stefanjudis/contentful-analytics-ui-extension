@@ -30,9 +30,9 @@
         };
       })(window, document, 'script');
 
-      window.contentfulExtension.init(({ parameters, window }) => {
+      window.contentfulExtension.init(({ entry, parameters, window }) => {
         window.startAutoResizer();
-        const { clientId: clientid, viewId } = parameters.instance;
+        const { clientId: clientid, viewId, prefix } = parameters.instance;
 
         gapi.analytics.ready(() => {
           gapi.analytics.auth.authorize({
@@ -46,8 +46,9 @@
               ids: viewId,
               dimensions: 'ga:date',
               metrics: 'ga:sessions',
-              filters:
-                'ga:pagePath==/today-i-learned/configure-the-logged-error-stack-trace-length/',
+              filters: `ga:pagePath==/${
+                prefix ? `${prefix}/` : ''
+              }${entry.fields[slugId].getValue()}/`,
               'start-date': '30daysAgo',
               'end-date': 'yesterday'
             },
