@@ -30,51 +30,49 @@
         };
       })(window, document, 'script');
 
-      window.contentfulExtension.init(
-        ({ contentType, field, entry, parameters }) => {
-          console.log(parameters);
-          gapi.analytics.ready(function() {
-            const clientId = parameters.instance.clientId;
-            console.log(clientId);
+      window.contentfulExtension.init(extension => {
+        console.log(extension);
+        gapi.analytics.ready(() => {
+          const clientId = parameters.instance.clientId;
+          console.log(clientId);
 
-            gapi.analytics.auth.authorize({
-              container: 'auth-button',
-              clientid
-            });
-
-            const viewSelector = new gapi.analytics.ViewSelector({
-              container: 'view-selector'
-            });
-
-            const timeline = new gapi.analytics.googleCharts.DataChart({
-              reportType: 'ga',
-              query: {
-                dimensions: 'ga:date',
-                metrics: 'ga:sessions',
-                'start-date': '30daysAgo',
-                'end-date': 'yesterday'
-              },
-              chart: {
-                type: 'LINE',
-                container: 'timeline'
-              }
-            });
-
-            gapi.analytics.auth.on('success', function(response) {
-              viewSelector.execute();
-            });
-
-            viewSelector.on('change', function(ids) {
-              const newIds = {
-                query: {
-                  ids: ids
-                }
-              };
-              timeline.set(newIds).execute();
-            });
+          gapi.analytics.auth.authorize({
+            container: 'auth-button',
+            clientid
           });
-        }
-      );
+
+          const viewSelector = new gapi.analytics.ViewSelector({
+            container: 'view-selector'
+          });
+
+          const timeline = new gapi.analytics.googleCharts.DataChart({
+            reportType: 'ga',
+            query: {
+              dimensions: 'ga:date',
+              metrics: 'ga:sessions',
+              'start-date': '30daysAgo',
+              'end-date': 'yesterday'
+            },
+            chart: {
+              type: 'LINE',
+              container: 'timeline'
+            }
+          });
+
+          gapi.analytics.auth.on('success', function(response) {
+            viewSelector.execute();
+          });
+
+          viewSelector.on('change', function(ids) {
+            const newIds = {
+              query: {
+                ids: ids
+              }
+            };
+            timeline.set(newIds).execute();
+          });
+        });
+      });
     </script>
   </body>
 </html>
