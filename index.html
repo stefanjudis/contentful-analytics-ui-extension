@@ -48,26 +48,29 @@
             clientid
           });
 
+          const startRange = {
+            'start-date': '30daysAgo',
+            'end-date': 'today'
+          };
+
           const dateRangeSelector = new gapi.analytics.ext.DateRangeSelector({
             container: 'date-range-selector'
           })
-            .set({
-              'start-date': '30daysAgo',
-              'end-date': 'today'
-            })
+            .set(startRange)
             .execute();
 
           const timeline = new gapi.analytics.googleCharts.DataChart({
             reportType: 'ga',
             query: {
-              ids: viewId,
-              dimensions: 'ga:date',
-              metrics: 'ga:sessions',
-              filters: `ga:pagePath==/${
-                prefix ? `${prefix}/` : ''
-              }${entry.fields[slugId].getValue()}/`
-              // 'start-date': '30daysAgo',
-              // 'end-date': 'yesterday'
+              ...{
+                ids: viewId,
+                dimensions: 'ga:date',
+                metrics: 'ga:sessions',
+                filters: `ga:pagePath==/${
+                  prefix ? `${prefix}/` : ''
+                }${entry.fields[slugId].getValue()}/`
+              },
+              ...startRange
             },
             chart: {
               type: 'LINE',
@@ -79,13 +82,10 @@
             }
           });
 
+          timeline.execute();
+
           dateRangeSelector.on('change', function(data) {
             timeline.set({ query: data }).execute();
-
-            // Update the "from" dates text.
-            const datefield = document.getElementById('from-dates');
-            datefield.textContent =
-              data['start-date'] + '&mdash;' + data['end-date'];
           });
         });
 
