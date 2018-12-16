@@ -32,7 +32,12 @@
 
       window.contentfulExtension.init(({ entry, parameters, window }) => {
         window.startAutoResizer();
-        const { clientId: clientid, viewId, prefix } = parameters.instance;
+        const {
+          clientId: clientid,
+          viewId,
+          prefix,
+          slugId
+        } = parameters.instance;
 
         gapi.analytics.ready(() => {
           gapi.analytics.auth.authorize({
