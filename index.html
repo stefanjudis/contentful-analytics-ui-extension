@@ -13,6 +13,7 @@
     <div id="date-range-selector-1-container"></div>
     <section id="timeline"></section>
     <section id="auth-button"></section>
+    <button id="signOff">Log out</button>
     <script>
       (function(w, d, s, g, js, fjs) {
         g = w.gapi || (w.gapi = {});
@@ -81,6 +82,10 @@
             datefield.textContent =
               data['start-date'] + '&mdash;' + data['end-date'];
           });
+        });
+
+        document.getElementById('signOff').addEventListener('click', () => {
+          gapi.analytics.signOut();
         });
       });
     </script>
