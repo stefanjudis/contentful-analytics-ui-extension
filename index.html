@@ -7,10 +7,11 @@
       href="https://contentful.github.io/ui-extensions-sdk/cf-extension.css"
     />
     <script src="https://unpkg.com/contentful-ui-extensions-sdk@3"></script>
+    <script src="https://unpkg.com/contentful-ui-extensions-sdk@3"></script>
   </head>
   <body>
-    <section id="auth-button"></section>
     <section id="timeline"></section>
+    <section id="auth-button"></section>
     <script>
       (function(w, d, s, g, js, fjs) {
         g = w.gapi || (w.gapi = {});
@@ -44,7 +45,7 @@
             query: {
               ids: viewId,
               dimensions: 'ga:date',
-              metrics: 'ga:sessions,ga:uniquePageviews',
+              metrics: 'ga:sessions,ga:sessionDurationBucket',
               filters:
                 'ga:pagePath==/today-i-learned/configure-the-logged-error-stack-trace-length/',
               'start-date': '30daysAgo',
