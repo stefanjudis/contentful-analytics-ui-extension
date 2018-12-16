@@ -61,4 +61,4 @@ typings/
 .next
 
 # generated files
-dist
+dist/index.html
