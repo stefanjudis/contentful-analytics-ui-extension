@@ -29,7 +29,8 @@
         };
       })(window, document, 'script');
 
-      window.contentfulExtension.init(({ parameters }) => {
+      window.contentfulExtension.init(({ parameters, window }) => {
+        window.startAutoResizer();
         const { clientId: clientid, viewId } = parameters.instance;
 
         gapi.analytics.ready(() => {
