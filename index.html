@@ -10,7 +10,7 @@
     <script src="/public/javascript/embed-api/components/date-range-selector.js"></script>
   </head>
   <body>
-    <div id="date-range-selector-1-container"></div>
+    <div id="date-range-selector"></div>
     <section id="timeline"></section>
     <section id="auth-button"></section>
     <button id="signOff">Log out</button>
@@ -47,10 +47,14 @@
             clientid
           });
 
-          const dateRange = {
-            'start-date': '30daysAgo',
-            'end-date': 'today'
-          };
+          const dateRangeSelector1 = new gapi.analytics.ext.DateRangeSelector({
+            container: 'date-range-selector'
+          })
+            .set({
+              'start-date': '30daysAgo',
+              'end-date': 'today'
+            })
+            .execute();
 
           const timeline = new gapi.analytics.googleCharts.DataChart({
             reportType: 'ga',
@@ -74,7 +78,7 @@
             }
           });
 
-          dateRangeSelector1.on('change', function(data) {
+          dateRangeSelector.on('change', function(data) {
             timeline.set({ query: data }).execute();
 
             // Update the "from" dates text.
