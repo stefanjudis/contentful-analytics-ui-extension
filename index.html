@@ -7,9 +7,10 @@
       href="https://contentful.github.io/ui-extensions-sdk/cf-extension.css"
     />
     <script src="https://unpkg.com/contentful-ui-extensions-sdk@3"></script>
-    <script src="https://unpkg.com/contentful-ui-extensions-sdk@3"></script>
+    <script src="/public/javascript/embed-api/components/date-range-selector.js"></script>
   </head>
   <body>
+    <div id="date-range-selector-1-container"></div>
     <section id="timeline"></section>
     <section id="auth-button"></section>
     <script>
@@ -45,6 +46,11 @@
             clientid
           });
 
+          const dateRange = {
+            'start-date': '30daysAgo',
+            'end-date': 'today'
+          };
+
           const timeline = new gapi.analytics.googleCharts.DataChart({
             reportType: 'ga',
             query: {
@@ -53,9 +59,9 @@
               metrics: 'ga:sessions',
               filters: `ga:pagePath==/${
                 prefix ? `${prefix}/` : ''
-              }${entry.fields[slugId].getValue()}/`,
-              'start-date': '30daysAgo',
-              'end-date': 'yesterday'
+              }${entry.fields[slugId].getValue()}/`
+              // 'start-date': '30daysAgo',
+              // 'end-date': 'yesterday'
             },
             chart: {
               type: 'LINE',
@@ -67,7 +73,14 @@
             }
           });
 
-          timeline.execute();
+          dateRangeSelector1.on('change', function(data) {
+            timeline.set({ query: data }).execute();
+
+            // Update the "from" dates text.
+            const datefield = document.getElementById('from-dates');
+            datefield.textContent =
+              data['start-date'] + '&mdash;' + data['end-date'];
+          });
         });
       });
     </script>
