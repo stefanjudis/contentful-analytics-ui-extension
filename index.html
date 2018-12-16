@@ -31,11 +31,11 @@
     <div id="date-range-selector"></div>
     <section id="timeline"></section>
     <section id="auth-button"></section>
-    <button id="signOff">Log out</button>
+    <button id="signOff" class="cf-btn-primary">Log out</button>
     <script>
       window.contentfulExtension.init(
         ({ entry, parameters, window: extWindow }) => {
-          window.startAutoResizer();
+          extWindow.startAutoResizer();
           const {
             clientId: clientid,
             viewId,
@@ -95,7 +95,7 @@
 
             document.getElementById('signOff').addEventListener('click', () => {
               gapi.analytics.auth.signOut();
-              extWindow.location.reload();
+              window.location.reload();
             });
           });
         }
