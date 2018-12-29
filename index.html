@@ -49,7 +49,7 @@
           super();
 
           this.state = {
-            dates: {
+            range: {
               start: new Date(TODAY - DAY_IN_MS * 30),
               end: TODAY
             },
@@ -73,14 +73,18 @@
                     prefix ? `${prefix}/` : ''
                   }${entry.fields[slugId].getValue()}/`
                 },
-                ...startRange
+                'start-date': '30daysAgo',
+                'end-date': 'today'
               }
             })
             .execute();
         }
 
         render() {
-          const { entry } = this.state;
+          const { range } = this.state;
+          const { entry } = this.props;
+
+          const formatDate = date => date.toISOString().slice(0, 10);
 
           if (!entry.getSys().publishedAt) {
             return html`
@@ -95,6 +99,7 @@
                 <input
                   type="date"
                   onchange=${this.handleDateChange.bind(this)}
+                  value="${formatDate(range.start)}"
                 />
               </label>
               <label>
@@ -102,6 +107,7 @@
                 <input
                   type="date"
                   onchange=${this.handleDateChange.bind(this)}
+                  value="${formatDate(range.end)}"
                 />
               </label>
             </div>
@@ -127,7 +133,7 @@
 
           render(
             html`
-              <${App} entry=${entry} />
+              <${App} entry=${entry} timeline=${timeline} />
             `,
             document.querySelector('.controls')
           );
