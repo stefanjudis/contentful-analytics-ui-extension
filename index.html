@@ -91,7 +91,7 @@
   <body>
     <section id="auth-button"></section>
     <main>
-      <header class="controls" hidden></header>
+      <header class="controls"></header>
       <section id="timeline"></section>
     </main>
     <script type="module">
@@ -123,10 +123,11 @@
       const formatDate = date => date.toISOString().slice(0, 10);
 
       class Controls extends Component {
-        constructor({ entry }) {
+        constructor({ entry, auth }) {
           super();
 
           this.state = {
+            isAuthorized: false,
             range: {
               start: new Date(TODAY - DAY_IN_MS * 14),
               end: TODAY
@@ -134,6 +135,13 @@
             dimension: 'date',
             entry
           };
+
+          auth.on('signIn', () => this.setState({ isAuthorized: true }));
+          auth.on('signOut', () => this.setState({ isAuthorized: false }));
+          auth.authorize({
+            container: 'auth-button',
+            clientid: parameters.instance.clientId
+          });
         }
 
         handleDateChange({ target }) {
@@ -152,7 +160,7 @@
         }
 
         render() {
-          const { range } = this.state;
+          const { range, isAuthorized } = this.state;
           const { entry, isAuthorized, signout } = this.props;
 
           if (!isAuthorized) {
@@ -245,43 +253,22 @@
           window.startAutoResizer();
 
           const $controls = document.querySelector('.controls');
+          const timeline = new gapi.analytics.googleCharts.DataChart(
+            TIMELINE_CONFIG
+          );
 
-          // needed for the external google auth flow
-          // user logs out and in again there is no needed
-          // mount the components again
-          let controlsMounted = false;
-
-          gapi.analytics.auth.on('signIn', () => {
-            $controls.hidden = false;
-
-            if (!controlsMounted) {
-              const timeline = new gapi.analytics.googleCharts.DataChart(
-                TIMELINE_CONFIG
-              );
-
-              render(
-                html`
-                  <${Controls}
-                    entry=${entry}
-                    timeline=${timeline}
-                    signout=${() => gapi.analytics.auth.signOut()}
-                    ...${parameters.instance}
-                  />
-                `,
-                $controls
-              );
-              controlsMounted = true;
-            }
-          });
-
-          gapi.analytics.auth.on('signOut', () => {
-            $controls.hidden = true;
-          });
-
-          gapi.analytics.auth.authorize({
-            container: 'auth-button',
-            clientid: parameters.instance.clientId
-          });
+          render(
+            html`
+              <${Controls}
+                auth=${gapi.analytics.auth}
+                entry=${entry}
+                timeline=${timeline}
+                signout=${() => gapi.analytics.auth.signOut()}
+                ...${parameters.instance}
+              />
+            `,
+            $controls
+          );
         });
       });
     </script>
