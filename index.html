@@ -28,9 +28,11 @@
   </head>
   <body>
     <div id="date-range-selector"></div>
-    <section id="timeline"></section>
     <section id="auth-button"></section>
-    <main></main>
+    <main>
+      <header class="controls"></header>
+      <section id="timeline"></section>
+    </main>
     <button id="signOff" class="cf-btn-primary">Log out</button>
     <script type="module">
       import {
@@ -60,7 +62,21 @@
         }
 
         handleDateChange(event) {
-          console.log(event);
+          this.props.timeline
+            .set({
+              query: {
+                ...{
+                  ids: viewId,
+                  dimensions: 'ga:date',
+                  metrics: 'ga:sessions',
+                  filters: `ga:pagePath==/${
+                    prefix ? `${prefix}/` : ''
+                  }${entry.fields[slugId].getValue()}/`
+                },
+                ...startRange
+              }
+            })
+            .execute();
         }
 
         render() {
@@ -97,11 +113,23 @@
         gapi.analytics.ready(() => {
           window.startAutoResizer();
 
+          const timeline = new gapi.analytics.googleCharts.DataChart({
+            reportType: 'ga',
+            chart: {
+              type: 'LINE',
+              container: 'timeline',
+              options: {
+                width: '100%',
+                backgroundColor: '#f7f9fa'
+              }
+            }
+          });
+
           render(
             html`
               <${App} entry=${entry} />
             `,
-            document.querySelector('main')
+            document.querySelector('.controls')
           );
         });
 
@@ -132,29 +160,6 @@
         //   })
         //     .set(startRange)
         //     .execute();
-
-        //   const timeline = new gapi.analytics.googleCharts.DataChart({
-        //     reportType: 'ga',
-        //     query: {
-        //       ...{
-        //         ids: viewId,
-        //         dimensions: 'ga:date',
-        //         metrics: 'ga:sessions',
-        //         filters: `ga:pagePath==/${
-        //           prefix ? `${prefix}/` : ''
-        //         }${entry.fields[slugId].getValue()}/`
-        //       },
-        //       ...startRange
-        //     },
-        //     chart: {
-        //       type: 'LINE',
-        //       container: 'timeline',
-        //       options: {
-        //         width: '100%',
-        //         backgroundColor: '#f7f9fa'
-        //       }
-        //     }
-        //   });
 
         //   timeline.execute();
 
