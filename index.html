@@ -170,6 +170,9 @@
         constructor({ entry, auth, parameters }) {
           super();
 
+          const pagePath = `/${
+            paremeters.prefix ? `${prefix}/` : ''
+          }${entry.fields[slugId].getValue()}`;
           this.state = {
             isAuthorized: false,
             range: {
@@ -177,7 +180,7 @@
               end: TODAY
             },
             dimension: 'date',
-            entry
+            pagePath
           };
 
           auth.on('signIn', () => this.setState({ isAuthorized: true }));
@@ -203,9 +206,9 @@
           });
         }
 
-        render() {
-          const { range, dimension, isAuthorized } = this.state;
-          const { entry, auth, parameters } = this.props;
+        render(props, state) {
+          const { range, dimension, isAuthorized, pagePath } = state;
+          const { auth, parameters } = props;
 
           if (!isAuthorized) {
             return '';
@@ -261,7 +264,7 @@
                 }
               </div>
               <${Timeline}
-                entry=${entry}
+                pagePath=${pagePath}
                 range=${range}
                 dimension=${dimension}
                 parameters=${parameters}
