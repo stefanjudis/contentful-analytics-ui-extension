@@ -166,7 +166,7 @@
               <div class="dimensions">
                 ${
                   TIMELINE_DIMENSIONS.map(dimension => {
-                    const isActive = dimension === this.state.dimension;
+                    const isActive = dimension.value === this.state.dimension;
 
                     return html`
                       <label class="${isActive ? 'is-active' : ''}">
