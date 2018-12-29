@@ -90,27 +90,34 @@
           this.renderTimeline();
 
           return html`
-            <div>
-              <label>
-                Start date
-                <input
-                  name="start"
-                  type="date"
-                  onchange=${this.handleDateChange.bind(this)}
-                  value="${formatDate(range.start)}"
-                />
-              </label>
-              <label>
-                End date
-                <input
-                  name="end"
-                  type="date"
-                  onchange=${this.handleDateChange.bind(this)}
-                  value="${formatDate(range.end)}"
-                  max="${formatDate(TODAY)}"
-                />
-              </label>
-            </div>
+            <section>
+              <div>
+                <label>
+                  Start date
+                  <input
+                    name="start"
+                    type="date"
+                    onchange=${this.handleDateChange.bind(this)}
+                    value="${formatDate(range.start)}"
+                  />
+                </label>
+                <label>
+                  End date
+                  <input
+                    name="end"
+                    type="date"
+                    onchange=${this.handleDateChange.bind(this)}
+                    value="${formatDate(range.end)}"
+                    max="${formatDate(TODAY)}"
+                  />
+                </label>
+              </div>
+              <div>
+                <input type="radio" name="dimension" value="day" />
+                <input type="radio" name="dimension" value="week" />
+                <input type="radio" name="dimension" value="month" />
+              </div>
+            </section>
           `;
         }
 
@@ -123,7 +130,7 @@
               query: {
                 ...{
                   ids: this.props.viewId,
-                  dimensions: 'ga:date',
+                  dimensions: 'ga:week',
                   metrics: 'ga:sessions',
                   filters: `ga:pagePath==/${
                     prefix ? `${prefix}/` : ''
