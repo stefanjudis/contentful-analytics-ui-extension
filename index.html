@@ -51,6 +51,11 @@
           console.log(entry);
           console.log('sys', entry.getSys());
         }
+
+        handleDateChange(event) {
+          console.log(event);
+        }
+
         render() {
           const { entry } = this.state;
 
@@ -61,14 +66,21 @@
           }
 
           return html`
-            <h1>hello world</h1>
+            <label>
+              Start date
+              <input type="date" onchange=${this.handleDateChange.bind(this)} />
+            </label>
+            <label>
+              End date
+              <input type="date" onchange=${this.handleDateChange.bind(this)} />
+            </label>
           `;
         }
       }
 
-      window.contentfulExtension.init(
-        ({ entry, parameters, window: extWindow }) => {
-          extWindow.startAutoResizer();
+      window.contentfulExtension.init(({ entry, parameters, window }) => {
+        gapi.analytics.ready(() => {
+          window.startAutoResizer();
 
           render(
             html`
@@ -76,71 +88,71 @@
             `,
             document.querySelector('main')
           );
+        });
 
-          // const {
-          //   clientId: clientid,
-          //   viewId,
-          //   prefix,
-          //   slugId
-          // } = parameters.instance;
+        // const {
+        //   clientId: clientid,
+        //   viewId,
+        //   prefix,
+        //   slugId
+        // } = parameters.instance;
 
-          // gapi.analytics.ready(() => {
-          //   console.log(
-          //     gapi.analytics.auth.isAuthorized,
-          //     'isAuthorized',
-          //     '+***********************'
-          //   );
-          //   gapi.analytics.auth.authorize({
-          //     container: 'auth-button',
-          //     clientid
-          //   });
-          //   const startRange = {
-          //     'start-date': '30daysAgo',
-          //     'end-date': 'today'
-          //   };
+        // gapi.analytics.ready(() => {
+        //   console.log(
+        //     gapi.analytics.auth.isAuthorized,
+        //     'isAuthorized',
+        //     '+***********************'
+        //   );
+        //   gapi.analytics.auth.authorize({
+        //     container: 'auth-button',
+        //     clientid
+        //   });
+        //   const startRange = {
+        //     'start-date': '30daysAgo',
+        //     'end-date': 'today'
+        //   };
 
-          //   const dateRangeSelector = new gapi.analytics.ext.DateRangeSelector({
-          //     container: 'date-range-selector'
-          //   })
-          //     .set(startRange)
-          //     .execute();
+        //   const dateRangeSelector = new gapi.analytics.ext.DateRangeSelector({
+        //     container: 'date-range-selector'
+        //   })
+        //     .set(startRange)
+        //     .execute();
 
-          //   const timeline = new gapi.analytics.googleCharts.DataChart({
-          //     reportType: 'ga',
-          //     query: {
-          //       ...{
-          //         ids: viewId,
-          //         dimensions: 'ga:date',
-          //         metrics: 'ga:sessions',
-          //         filters: `ga:pagePath==/${
-          //           prefix ? `${prefix}/` : ''
-          //         }${entry.fields[slugId].getValue()}/`
-          //       },
-          //       ...startRange
-          //     },
-          //     chart: {
-          //       type: 'LINE',
-          //       container: 'timeline',
-          //       options: {
-          //         width: '100%',
-          //         backgroundColor: '#f7f9fa'
-          //       }
-          //     }
-          //   });
+        //   const timeline = new gapi.analytics.googleCharts.DataChart({
+        //     reportType: 'ga',
+        //     query: {
+        //       ...{
+        //         ids: viewId,
+        //         dimensions: 'ga:date',
+        //         metrics: 'ga:sessions',
+        //         filters: `ga:pagePath==/${
+        //           prefix ? `${prefix}/` : ''
+        //         }${entry.fields[slugId].getValue()}/`
+        //       },
+        //       ...startRange
+        //     },
+        //     chart: {
+        //       type: 'LINE',
+        //       container: 'timeline',
+        //       options: {
+        //         width: '100%',
+        //         backgroundColor: '#f7f9fa'
+        //       }
+        //     }
+        //   });
 
-          //   timeline.execute();
+        //   timeline.execute();
 
-          //   dateRangeSelector.on('change', function(data) {
-          //     timeline.set({ query: data }).execute();
-          //   });
+        //   dateRangeSelector.on('change', function(data) {
+        //     timeline.set({ query: data }).execute();
+        //   });
 
-          //   document.getElementById('signOff').addEventListener('click', () => {
-          //     gapi.analytics.auth.signOut();
-          //     window.location.reload();
-          //   });
-          // });
-        }
-      );
+        //   document.getElementById('signOff').addEventListener('click', () => {
+        //     gapi.analytics.auth.signOut();
+        //     window.location.reload();
+        //   });
+        // });
+      });
     </script>
   </body>
 </html>
