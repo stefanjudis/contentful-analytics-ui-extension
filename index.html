@@ -253,7 +253,7 @@
           render(
             html`
               <${Controls}
-                isAuthorized=${gapi.analytics.auth.isAuthorized}
+                isAuthorized=${gapi.analytics.auth.isAuthorized()}
                 entry=${entry}
                 timeline=${timeline}
                 signout=${() => gapi.analytics.auth.signOut()}
