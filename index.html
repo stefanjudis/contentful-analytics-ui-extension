@@ -234,8 +234,8 @@
               <${Controls}
                 entry=${entry}
                 timeline=${timeline}
-                ...${parameters.instance}
                 signout=${() => gapi.analytics.auth.signOut()}
+                ...${parameters.instance}
               />
             `,
             document.querySelector('.controls')
