@@ -129,7 +129,7 @@
 
         render() {
           const { range } = this.state;
-          const { entry } = this.props;
+          const { entry, signout } = this.props;
 
           if (!entry.getSys().publishedAt) {
             return html`
@@ -180,9 +180,7 @@
                   `;
                 })}
               </div>
-              <button class="cf-btn-primary" onclick="${
-                this.props.signout
-              }>Sign out</button>
+              <button class="cf-btn-primary" onclick="${signout}>Sign out</button>
             </section>
           `;
         }
