@@ -138,7 +138,7 @@
         }
 
         render(props, state) {
-          const { range, dimension } = props;
+          const { entry, range, dimension } = props;
           const { prefix, slugId, viewId } = props.parameters;
 
           if (state.timeline) {
@@ -261,6 +261,7 @@
                 }
               </div>
               <${Timeline}
+                entry=${entry}
                 range=${range}
                 dimension=${dimension}
                 parameters=${parameters}
