@@ -66,11 +66,11 @@
             .set({
               query: {
                 ...{
-                  ids: this.props.parameters.viewId,
+                  ids: this.props.viewId,
                   dimensions: 'ga:date',
                   metrics: 'ga:sessions',
                   filters: `ga:pagePath==/${
-                    prefix ? `${this.props.parameters.prefix}/` : ''
+                    prefix ? `${this.props.prefix}/` : ''
                   }${this.props.entry.fields[slugId].getValue()}/`
                 },
                 'start-date': '30daysAgo',
