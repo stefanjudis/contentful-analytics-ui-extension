@@ -113,6 +113,7 @@
 
       class Timeline extends Component {
         componentDidMount() {
+          console.log('mounting', this.root, this.props);
           const timeline = new gapi.analytics.googleCharts.DataChart({
             reportType: 'ga',
             chart: {
@@ -193,8 +194,8 @@
         }
 
         render() {
-          const { range, isAuthorized } = this.state;
-          const { entry, auth } = this.props;
+          const { range, dimension, isAuthorized } = this.state;
+          const { entry, auth, parameters } = this.props;
 
           if (!isAuthorized) {
             return '';
@@ -250,10 +251,13 @@
                 }
               </div>
               <Timeline
-                range=${this.state.range}
-                dimension=${this.state.dimension}
-                parameters=${this.props.parameters}
+                range=${range}
+                dimension=${dimension}
+                parameters=${parameters}
               />
+              <button type="button" onClick=${() => auth.signout()}>
+                sign out
+              </button>
             </section>
           `;
         }
