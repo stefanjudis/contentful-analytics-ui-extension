@@ -148,7 +148,7 @@
         }
 
         render(props, state) {
-          const { entry, range, dimension } = props;
+          const { entry, range, dimension, pagePath } = props;
           const { prefix, slugId, viewId } = props.parameters;
 
           if (state.timeline) {
@@ -159,9 +159,7 @@
                     ids: viewId,
                     dimensions: `ga:${dimension}`,
                     metrics: 'ga:sessions',
-                    filters: `ga:pagePath==/${
-                      prefix ? `${prefix}/` : ''
-                    }${entry.fields[slugId].getValue()}/`
+                    filters: `ga:pagePath==${pagePath}`
                   },
                   'start-date': formatDate(range.start),
                   'end-date': formatDate(range.end)
@@ -182,7 +180,7 @@
 
           const pagePath = `/${
             paremeters.prefix ? `${prefix}/` : ''
-          }${entry.fields[slugId].getValue()}`;
+          }${entry.fields[slugId].getValue()}/`;
           this.state = {
             isAuthorized: false,
             range: {
