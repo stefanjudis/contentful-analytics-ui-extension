@@ -28,15 +28,18 @@
     <style>
       body {
         margin: 0;
+        padding: 1px;
       }
 
       .range {
         display: flex;
         padding: 0.5em 0;
+        justify-content: space-between;
       }
 
       .range label {
         flex: 1;
+        max-width: 47.5%;
       }
 
       .range input {
@@ -44,6 +47,7 @@
       }
 
       .dimensions {
+        font-size: 0.875em;
         display: flex;
         border: 1px solid #ccc;
         border-radius: 0.25em;
@@ -87,7 +91,11 @@
 
       const DAY_IN_MS = 1000 * 60 * 60 * 24;
       const TODAY = new Date();
-      const TIMELINE_DIMENSIONS = ['day', 'week', 'month'];
+      const TIMELINE_DIMENSIONS = [
+        { label: 'Day', value: 'date' },
+        { label: 'Week', value: 'week' },
+        { label: 'Month', value: 'month' }
+      ];
 
       const formatDate = date => date.toISOString().slice(0, 10);
 
@@ -136,7 +144,7 @@
             <section>
               <div class="range">
                 <label>
-                  Start date
+                  From
                   <input
                     name="start"
                     type="date"
@@ -145,7 +153,7 @@
                   />
                 </label>
                 <label>
-                  End date
+                  To
                   <input
                     name="end"
                     type="date"
@@ -162,11 +170,11 @@
 
                     return html`
                       <label class="${isActive ? 'is-active' : ''}">
-                        ${dimension}
+                        ${dimension.label}
                         <input
                           type="radio"
                           name="dimension"
-                          value="${dimension}"
+                          value="${dimension.value}"
                           onchange=${this.handleDimensionChange.bind(this)}
                           checked=${isActive}
                         />
