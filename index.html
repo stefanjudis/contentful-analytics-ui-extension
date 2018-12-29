@@ -68,8 +68,7 @@
 
         handleDateChange({ target }) {
           const { range } = this.state;
-          console.log(target);
-          range[target.name] = target.valueAsDate();
+          range[target.name] = target.valueAsDate;
 
           this.setState({
             range
