@@ -164,25 +164,24 @@
                 </label>
               </div>
               <div class="dimensions">
-                ${
-                  TIMELINE_DIMENSIONS.map(dimension => {
-                    const isActive = dimension.value === this.state.dimension;
+                ${TIMELINE_DIMENSIONS.map(dimension => {
+                  const isActive = dimension.value === this.state.dimension;
 
-                    return html`
-                      <label class="${isActive ? 'is-active' : ''}">
-                        ${dimension.label}
-                        <input
-                          type="radio"
-                          name="dimension"
-                          value="${dimension.value}"
-                          onchange=${this.handleDimensionChange.bind(this)}
-                          checked=${isActive}
-                        />
-                      </label>
-                    `;
-                  })
-                }
+                  return html`
+                    <label class="${isActive ? 'is-active' : ''}">
+                      ${dimension.label}
+                      <input
+                        type="radio"
+                        name="dimension"
+                        value="${dimension.value}"
+                        onchange=${this.handleDimensionChange.bind(this)}
+                        checked=${isActive}
+                      />
+                    </label>
+                  `;
+                })}
               </div>
+              <button onclick="${this.props.signout()}>Sign out</button>
             </section>
           `;
         }
@@ -237,17 +236,12 @@
                 entry=${entry}
                 timeline=${timeline}
                 ...${parameters.instance}
+                signout=${() => gapi.analytics.auth.signOut()}
               />
             `,
             document.querySelector('.controls')
           );
         });
-
-        //   document.getElementById('signOff').addEventListener('click', () => {
-        //     gapi.analytics.auth.signOut();
-        //     window.location.reload();
-        //   });
-        // });
       });
     </script>
   </body>
