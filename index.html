@@ -48,9 +48,18 @@
           };
 
           console.log('*****************************');
-          console.log(entry.getSys());
+          console.log(entry);
+          console.log('sys', entry.getSys());
         }
         render() {
+          const { entry } = this.state;
+
+          if (!entry.getSys().publishedAt) {
+            return html`
+              nothing to analyze... entry is not published
+            `;
+          }
+
           return html`
             <h1>hello world</h1>
           `;
@@ -60,8 +69,6 @@
       window.contentfulExtension.init(
         ({ entry, parameters, window: extWindow }) => {
           extWindow.startAutoResizer();
-
-          console.log(entry);
 
           render(
             html`
