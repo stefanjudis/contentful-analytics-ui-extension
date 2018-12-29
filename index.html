@@ -40,10 +40,9 @@
       } from 'https://unpkg.com/htm/preact/standalone.mjs';
 
       class App extends Component {
-        constructor() {
+        constructor({ entry }) {
           super();
 
-          const entry = this.props;
           this.state = {
             entry
           };
