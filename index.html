@@ -178,9 +178,10 @@
         constructor({ entry, auth, parameters }) {
           super();
 
-          const pagePath = `/${
-            parameters.prefix ? `${prefix}/` : ''
-          }${entry.fields[slugId].getValue()}/`;
+          const { prefix } = parameters;
+          const pagePath = `/${prefix ? `${prefix}/` : ''}${entry.fields[
+            slugId
+          ].getValue()}/`;
           this.state = {
             isAuthorized: false,
             range: {
