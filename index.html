@@ -178,7 +178,7 @@
         constructor({ entry, auth, parameters }) {
           super();
 
-          const { prefix } = parameters;
+          const { prefix, slugId } = parameters;
           const pagePath = `/${prefix ? `${prefix}/` : ''}${entry.fields[
             slugId
           ].getValue()}/`;
