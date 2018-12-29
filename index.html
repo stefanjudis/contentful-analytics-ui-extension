@@ -86,6 +86,16 @@
       .dimensions label + label {
         border-left: 1px solid #ccc;
       }
+
+      .signout {
+        text-align: right;
+      }
+
+      .signout button {
+        background: none;
+        border: none;
+        color: #5b9fef;
+      }
     </style>
   </head>
   <body>
@@ -269,9 +279,11 @@
                 dimension=${dimension}
                 parameters=${parameters}
               />
-              <button type="button" onClick=${() => auth.signOut()}>
-                sign out
-              </button>
+              <div class="signout">
+                <button type="button" onClick=${() => auth.signOut()}>
+                  sign out
+                </button>
+              </div>
             </section>
           `;
         }
