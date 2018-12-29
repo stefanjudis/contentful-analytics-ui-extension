@@ -2,10 +2,6 @@
 <html>
   <head>
     <title>Contentful Analytics UI-extension</title>
-    <link
-      rel="stylesheet"
-      href="https://contentful.github.io/ui-extensions-sdk/cf-extension.css"
-    />
     <script src="https://unpkg.com/contentful-ui-extensions-sdk@3"></script>
     <script>
       (function(w, d, s, g, js, fjs) {
@@ -25,79 +21,105 @@
         };
       })(window, document, 'script');
     </script>
-    <script src="https://ga-dev-tools.appspot.com/public/javascript/embed-api/components/date-range-selector.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://contentful.github.io/ui-extensions-sdk/cf-extension.css"
+    />
   </head>
   <body>
     <div id="date-range-selector"></div>
     <section id="timeline"></section>
     <section id="auth-button"></section>
+    <main></main>
     <button id="signOff" class="cf-btn-primary">Log out</button>
-    <script>
+    <script type="module">
+      import {
+        html,
+        render,
+        Component
+      } from 'https://unpkg.com/htm/preact/standalone.mjs';
+
+      class App extends Component {
+        render() {
+          return html`
+            <h1>hello world</h1>
+          `;
+        }
+      }
+
       window.contentfulExtension.init(
         ({ entry, parameters, window: extWindow }) => {
           extWindow.startAutoResizer();
-          const {
-            clientId: clientid,
-            viewId,
-            prefix,
-            slugId
-          } = parameters.instance;
 
-          gapi.analytics.ready(() => {
-            console.log(
-              gapi.analytics.auth.isAuthorized,
-              'isAuthorized',
-              '+***********************'
-            );
-            gapi.analytics.auth.authorize({
-              container: 'auth-button',
-              clientid
-            });
-            const startRange = {
-              'start-date': '30daysAgo',
-              'end-date': 'today'
-            };
+          render(
+            html`
+              <${App} />
+            `,
+            document.querySelector('main')
+          );
 
-            const dateRangeSelector = new gapi.analytics.ext.DateRangeSelector({
-              container: 'date-range-selector'
-            })
-              .set(startRange)
-              .execute();
+          // const {
+          //   clientId: clientid,
+          //   viewId,
+          //   prefix,
+          //   slugId
+          // } = parameters.instance;
 
-            const timeline = new gapi.analytics.googleCharts.DataChart({
-              reportType: 'ga',
-              query: {
-                ...{
-                  ids: viewId,
-                  dimensions: 'ga:date',
-                  metrics: 'ga:sessions',
-                  filters: `ga:pagePath==/${
-                    prefix ? `${prefix}/` : ''
-                  }${entry.fields[slugId].getValue()}/`
-                },
-                ...startRange
-              },
-              chart: {
-                type: 'LINE',
-                container: 'timeline',
-                options: {
-                  width: '100%',
-                  backgroundColor: '#f7f9fa'
-                }
-              }
-            });
+          // gapi.analytics.ready(() => {
+          //   console.log(
+          //     gapi.analytics.auth.isAuthorized,
+          //     'isAuthorized',
+          //     '+***********************'
+          //   );
+          //   gapi.analytics.auth.authorize({
+          //     container: 'auth-button',
+          //     clientid
+          //   });
+          //   const startRange = {
+          //     'start-date': '30daysAgo',
+          //     'end-date': 'today'
+          //   };
 
-            timeline.execute();
+          //   const dateRangeSelector = new gapi.analytics.ext.DateRangeSelector({
+          //     container: 'date-range-selector'
+          //   })
+          //     .set(startRange)
+          //     .execute();
 
-            dateRangeSelector.on('change', function(data) {
-              timeline.set({ query: data }).execute();
-            });
+          //   const timeline = new gapi.analytics.googleCharts.DataChart({
+          //     reportType: 'ga',
+          //     query: {
+          //       ...{
+          //         ids: viewId,
+          //         dimensions: 'ga:date',
+          //         metrics: 'ga:sessions',
+          //         filters: `ga:pagePath==/${
+          //           prefix ? `${prefix}/` : ''
+          //         }${entry.fields[slugId].getValue()}/`
+          //       },
+          //       ...startRange
+          //     },
+          //     chart: {
+          //       type: 'LINE',
+          //       container: 'timeline',
+          //       options: {
+          //         width: '100%',
+          //         backgroundColor: '#f7f9fa'
+          //       }
+          //     }
+          //   });
 
-            document.getElementById('signOff').addEventListener('click', () => {
-              gapi.analytics.auth.signOut();
-              window.location.reload();
-            });
-          });
+          //   timeline.execute();
+
+          //   dateRangeSelector.on('change', function(data) {
+          //     timeline.set({ query: data }).execute();
+          //   });
+
+          //   document.getElementById('signOff').addEventListener('click', () => {
+          //     gapi.analytics.auth.signOut();
+          //     window.location.reload();
+          //   });
+          // });
         }
       );
     </script>
