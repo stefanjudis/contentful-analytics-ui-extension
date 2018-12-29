@@ -32,6 +32,10 @@
 
       .dimensions {
         display: flex;
+        border: 1px solid #ddd;
+        border-radius: 0.5em;
+        text-align: center;
+        background: #fff;
       }
 
       .dimensions input {
@@ -39,8 +43,12 @@
       }
 
       .dimensions label {
-        background: #fff;
         padding: 0.25em;
+        flex: 1;
+      }
+
+      .dimensions label + .dimensions label {
+        border-left: 1px solid #ddd;
       }
     </style>
   </head>
