@@ -40,6 +40,17 @@
       } from 'https://unpkg.com/htm/preact/standalone.mjs';
 
       class App extends Component {
+        constructor() {
+          super();
+
+          const entry = this.props;
+          this.state = {
+            entry
+          };
+
+          console.log('*****************************');
+          console.log(entry.getSys());
+        }
         render() {
           return html`
             <h1>hello world</h1>
@@ -55,7 +66,7 @@
 
           render(
             html`
-              <${App} />
+              <${App} entry=${entry} />
             `,
             document.querySelector('main')
           );
