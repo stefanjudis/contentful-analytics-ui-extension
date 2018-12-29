@@ -30,6 +30,18 @@
         margin: 0;
       }
 
+      .range {
+        display: flex;
+      }
+
+      .range label {
+        flex: 1;
+      }
+
+      .range input {
+        width: 100%;
+      }
+
       .dimensions {
         display: flex;
         border: 1px solid #ccc;
@@ -47,7 +59,7 @@
         flex: 1;
       }
 
-      .dimensions label.is-ative {
+      .dimensions label.is-active {
         background: #ddd;
       }
 
@@ -120,7 +132,7 @@
 
           return html`
             <section>
-              <div>
+              <div class="range">
                 <label>
                   Start date
                   <input
