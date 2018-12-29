@@ -180,7 +180,8 @@
                   `;
                 })}
               </div>
-              <button class="cf-btn-primary" onclick="${signout}>Sign out</button>
+              <button class="cf-btn-primary" onclick="${() =>
+                console.log('jooo')}>Sign out</button>
             </section>
           `;
         }
@@ -234,7 +235,6 @@
               <${Controls}
                 entry=${entry}
                 timeline=${timeline}
-                signout=${() => gapi.analytics.auth.signOut()}
                 ...${parameters.instance}
               />
             `,
