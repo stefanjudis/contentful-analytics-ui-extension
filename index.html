@@ -66,27 +66,14 @@
           console.log('sys', entry.getSys());
         }
 
-        handleDateChange(event) {
+        handleDateChange({ target }) {
           const { entry, prefix, slugId } = this.props;
+          const { range } = this.state;
 
-          console.log(event);
-
-          this.props.timeline
-            .set({
-              query: {
-                ...{
-                  ids: this.props.viewId,
-                  dimensions: 'ga:date',
-                  metrics: 'ga:sessions',
-                  filters: `ga:pagePath==/${
-                    prefix ? `${prefix}/` : ''
-                  }${entry.fields[slugId].getValue()}/`
-                },
-                'start-date': '30daysAgo',
-                'end-date': 'today'
-              }
-            })
-            .execute();
+          range[target.name] = target.valueAsDate();
+          this.setState({
+            range
+          });
         }
 
         render() {
@@ -100,6 +87,8 @@
               nothing to analyze... entry is not published
             `;
           }
+
+          this.renderTimeline();
 
           return html`
             <div>
@@ -124,6 +113,25 @@
               </label>
             </div>
           `;
+        }
+
+        renderTimeline() {
+          this.props.timeline
+            .set({
+              query: {
+                ...{
+                  ids: this.props.viewId,
+                  dimensions: 'ga:date',
+                  metrics: 'ga:sessions',
+                  filters: `ga:pagePath==/${
+                    prefix ? `${prefix}/` : ''
+                  }${entry.fields[slugId].getValue()}/`
+                },
+                'start-date': '30daysAgo',
+                'end-date': 'today'
+              }
+            })
+            .execute();
         }
       }
 
