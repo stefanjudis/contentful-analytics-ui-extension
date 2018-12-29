@@ -81,7 +81,6 @@
       <header class="controls"></header>
       <section id="timeline"></section>
     </main>
-    <button id="signOff" class="cf-btn-primary">Log out</button>
     <script type="module">
       import {
         html,
@@ -181,7 +180,7 @@
                   `;
                 })}
               </div>
-              <button onclick="${this.props.signout()}>Sign out</button>
+              <button class="cf-btn-primary" onclick="${this.props.signout()}>Sign out</button>
             </section>
           `;
         }
