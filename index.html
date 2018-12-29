@@ -32,7 +32,7 @@
 
       .dimensions {
         display: flex;
-        border: 1px solid #ddd;
+        border: 1px solid #ccc;
         border-radius: 0.5em;
         text-align: center;
         background: #fff;
@@ -47,8 +47,12 @@
         flex: 1;
       }
 
-      .dimensions label + .dimensions label {
-        border-left: 1px solid #ddd;
+      .dimensions label.is-ative {
+        background: #ddd;
+      }
+
+      .dimensions label + label {
+        border-left: 1px solid #ccc;
       }
     </style>
   </head>
@@ -139,20 +143,22 @@
               </div>
               <div class="dimensions">
                 ${
-                  TIMELINE_DIMENSIONS.map(
-                    dimension => html`
-                      <label>
+                  TIMELINE_DIMENSIONS.map(dimension => {
+                    const isActive = dimension === this.state.dimension;
+
+                    return html`
+                      <label class="${isActive ? 'is-active' : ''}">
                         ${dimension}
                         <input
                           type="radio"
                           name="dimension"
                           value="${dimension}"
                           onchange=${this.handleDimensionChange.bind(this)}
-                          checked=${dimension === this.state.dimension}
+                          checked=${isActive}
                         />
                       </label>
-                    `
-                  )
+                    `;
+                  })
                 }
               </div>
             </section>
