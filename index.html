@@ -25,6 +25,11 @@
       rel="stylesheet"
       href="https://contentful.github.io/ui-extensions-sdk/cf-extension.css"
     />
+    <style>
+      body {
+        margin: 0;
+      }
+    </style>
   </head>
   <body>
     <div id="date-range-selector"></div>
@@ -64,6 +69,8 @@
         handleDateChange(event) {
           const { entry, prefix, slugId } = this.props;
 
+          console.log(event);
+
           this.props.timeline
             .set({
               query: {
@@ -99,6 +106,7 @@
               <label>
                 Start date
                 <input
+                  name="start"
                   type="date"
                   onchange=${this.handleDateChange.bind(this)}
                   value="${formatDate(range.start)}"
@@ -107,9 +115,11 @@
               <label>
                 End date
                 <input
+                  name="end"
                   type="date"
                   onchange=${this.handleDateChange.bind(this)}
                   value="${formatDate(range.end)}"
+                  max="${formatDate(TODAY)}"
                 />
               </label>
             </div>
