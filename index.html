@@ -66,15 +66,22 @@
           }
 
           return html`
-            <label>
-              Start date
-              <input type="date" onchange=${this.handleDateChange.bind(this)} />
-            </label>
-            nkkkk
-            <label>
-              End date
-              <input type="date" onchange=${this.handleDateChange.bind(this)} />
-            </label>
+            <div>
+              <label>
+                Start date
+                <input
+                  type="date"
+                  onchange=${this.handleDateChange.bind(this)}
+                />
+              </label>
+              <label>
+                End date
+                <input
+                  type="date"
+                  onchange=${this.handleDateChange.bind(this)}
+                />
+              </label>
+            </div>
           `;
         }
       }
