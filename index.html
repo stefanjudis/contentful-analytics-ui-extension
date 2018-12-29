@@ -114,17 +114,19 @@
       class Timeline extends Component {
         componentDidMount() {
           console.log('mounting', this.root, this.props);
-          const timeline = new gapi.analytics.googleCharts.DataChart({
-            reportType: 'ga',
-            chart: {
-              type: 'LINE',
-              container: this.root,
-              options: {
-                width: '100%',
-                backgroundColor: '#f7f9fa'
+          this.state = {
+            timeline: new gapi.analytics.googleCharts.DataChart({
+              reportType: 'ga',
+              chart: {
+                type: 'LINE',
+                container: this.root,
+                options: {
+                  width: '100%',
+                  backgroundColor: '#f7f9fa'
+                }
               }
-            }
-          });
+            })
+          };
         }
 
         render() {
