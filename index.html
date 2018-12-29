@@ -217,7 +217,7 @@
 
         render(props, state) {
           const { range, dimension, isAuthorized, pagePath } = state;
-          const { auth, parameters } = props;
+          const { auth, entry, parameters } = props;
 
           if (!isAuthorized) {
             return '';
