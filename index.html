@@ -29,6 +29,19 @@
       body {
         margin: 0;
       }
+
+      .dimensions {
+        display: flex;
+      }
+
+      .dimensions input {
+        display: none;
+      }
+
+      .dimensions label {
+        background: #fff;
+        padding: 0.25em;
+      }
     </style>
   </head>
   <body>
@@ -48,7 +61,6 @@
 
       const DAY_IN_MS = 1000 * 60 * 60 * 24;
       const TODAY = new Date();
-
       const TIMELINE_DIMENSIONS = ['day', 'week', 'month'];
 
       const formatDate = date => date.toISOString().slice(0, 10);
@@ -65,10 +77,6 @@
             dimension: 'day',
             entry
           };
-
-          console.log('*****************************');
-          console.log(entry);
-          console.log('sys', entry.getSys());
         }
 
         handleDateChange({ target }) {
@@ -92,7 +100,7 @@
 
           if (!entry.getSys().publishedAt) {
             return html`
-              nothing to analyze... entry is not published
+              Nothing to analyze... entry is not published.
             `;
           }
 
@@ -121,7 +129,7 @@
                   />
                 </label>
               </div>
-              <div>
+              <div class="dimensions">
                 ${
                   TIMELINE_DIMENSIONS.map(
                     dimension => html`
@@ -175,7 +183,6 @@
             clientid: parameters.instance.clientId
           });
 
-          console.log(parameters.instance);
           const timeline = new gapi.analytics.googleCharts.DataChart({
             reportType: 'ga',
             chart: {
@@ -199,40 +206,6 @@
             document.querySelector('.controls')
           );
         });
-
-        // const {
-        //   clientId: clientid,
-        //   viewId,
-        //   prefix,
-        //   slugId
-        // } = parameters.instance;
-
-        // gapi.analytics.ready(() => {
-        //   console.log(
-        //     gapi.analytics.auth.isAuthorized,
-        //     'isAuthorized',
-        //     '+***********************'
-        //   );
-        //   gapi.analytics.auth.authorize({
-        //     container: 'auth-button',
-        //     clientid
-        //   });
-        //   const startRange = {
-        //     'start-date': '30daysAgo',
-        //     'end-date': 'today'
-        //   };
-
-        //   const dateRangeSelector = new gapi.analytics.ext.DateRangeSelector({
-        //     container: 'date-range-selector'
-        //   })
-        //     .set(startRange)
-        //     .execute();
-
-        //   timeline.execute();
-
-        //   dateRangeSelector.on('change', function(data) {
-        //     timeline.set({ query: data }).execute();
-        //   });
 
         //   document.getElementById('signOff').addEventListener('click', () => {
         //     gapi.analytics.auth.signOut();
