@@ -70,8 +70,8 @@
                   dimensions: 'ga:date',
                   metrics: 'ga:sessions',
                   filters: `ga:pagePath==/${
-                    prefix ? `${prefix}/` : ''
-                  }${entry.fields[slugId].getValue()}/`
+                    prefix ? `${this.props.parameters.prefix}/` : ''
+                  }${this.props.entry.fields[slugId].getValue()}/`
                 },
                 'start-date': '30daysAgo',
                 'end-date': 'today'
@@ -119,6 +119,11 @@
         gapi.analytics.ready(() => {
           window.startAutoResizer();
 
+          gapi.analytics.auth.authorize({
+            container: 'auth-button',
+            clientid: parameters.instance.clientId
+          });
+
           console.log(parameters.instance);
           const timeline = new gapi.analytics.googleCharts.DataChart({
             reportType: 'ga',
@@ -134,7 +139,11 @@
 
           render(
             html`
-              <${App} entry=${entry} timeline=${timeline} />
+              <${App}
+                entry=${entry}
+                timeline=${timeline}
+                ...${parameters.instance}
+              />
             `,
             document.querySelector('.controls')
           );
