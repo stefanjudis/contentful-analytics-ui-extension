@@ -62,6 +62,8 @@
         }
 
         handleDateChange(event) {
+          const { entry, prefix } = this.props;
+
           this.props.timeline
             .set({
               query: {
@@ -70,8 +72,8 @@
                   dimensions: 'ga:date',
                   metrics: 'ga:sessions',
                   filters: `ga:pagePath==/${
-                    prefix ? `${this.props.prefix}/` : ''
-                  }${this.props.entry.fields[slugId].getValue()}/`
+                    prefix ? `${prefix}/` : ''
+                  }${entry.fields[slugId].getValue()}/`
                 },
                 'start-date': '30daysAgo',
                 'end-date': 'today'
