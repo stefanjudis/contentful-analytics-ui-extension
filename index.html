@@ -123,7 +123,7 @@
       const formatDate = date => date.toISOString().slice(0, 10);
 
       class Controls extends Component {
-        constructor({ entry, auth }) {
+        constructor({ clientId, entry, auth }) {
           super();
 
           this.state = {
@@ -140,7 +140,7 @@
           auth.on('signOut', () => this.setState({ isAuthorized: false }));
           auth.authorize({
             container: 'auth-button',
-            clientid: parameters.instance.clientId
+            clientid: clientId
           });
         }
 
