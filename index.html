@@ -49,6 +49,8 @@
       const DAY_IN_MS = 1000 * 60 * 60 * 24;
       const TODAY = new Date();
 
+      const TIMELINE_DIMENSIONS = ['day', 'week', 'month'];
+
       const formatDate = date => date.toISOString().slice(0, 10);
 
       class Controls extends Component {
@@ -57,9 +59,10 @@
 
           this.state = {
             range: {
-              start: new Date(TODAY - DAY_IN_MS * 30),
+              start: new Date(TODAY - DAY_IN_MS * 14),
               end: TODAY
             },
+            dimention: 'day',
             entry
           };
 
@@ -74,6 +77,12 @@
 
           this.setState({
             range
+          });
+        }
+
+        handleDimensionChange({ target }) {
+          this.setState({
+            dimension: target.value
           });
         }
 
@@ -113,9 +122,21 @@
                 </label>
               </div>
               <div>
-                <input type="radio" name="dimension" value="day" />
-                <input type="radio" name="dimension" value="week" />
-                <input type="radio" name="dimension" value="month" />
+                ${
+                  TIMELINE_DIMENSIONS.map(
+                    dimension => html`
+                      <label>
+                        ${dimension}
+                        <input
+                          type="radio"
+                          name="dimension"
+                          value="${dimension}"
+                          onchange=${this.handleDimensionChange.bind(this)}
+                        />
+                      </label>
+                    `
+                  )
+                }
               </div>
             </section>
           `;
@@ -123,14 +144,14 @@
 
         renderTimeline() {
           const { entry, prefix, slugId, viewId } = this.props;
-          const { range } = this.state;
+          const { range, dimension } = this.state;
 
           this.props.timeline
             .set({
               query: {
                 ...{
                   ids: this.props.viewId,
-                  dimensions: 'ga:week',
+                  dimensions: `ga:${dimension}`,
                   metrics: 'ga:sessions',
                   filters: `ga:pagePath==/${
                     prefix ? `${prefix}/` : ''
