@@ -67,7 +67,6 @@
         }
 
         handleDateChange({ target }) {
-          const { entry, prefix, slugId } = this.props;
           const { range } = this.state;
 
           range[target.name] = target.valueAsDate();
@@ -116,6 +115,7 @@
         }
 
         renderTimeline() {
+          const { entry, prefix, slugId, viewId } = this.props;
           this.props.timeline
             .set({
               query: {
