@@ -156,7 +156,7 @@
       }
 
       class Controls extends Component {
-        constructor({ clientId, entry, auth }) {
+        constructor({ entry, auth, parameters }) {
           super();
 
           this.state = {
@@ -173,7 +173,7 @@
           auth.on('signOut', () => this.setState({ isAuthorized: false }));
           auth.authorize({
             container: 'auth-button',
-            clientid: clientId
+            clientid: parameters.clientId
           });
         }
 
