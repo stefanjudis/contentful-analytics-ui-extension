@@ -75,7 +75,6 @@
     </style>
   </head>
   <body>
-    <div id="date-range-selector"></div>
     <section id="auth-button"></section>
     <main>
       <header class="controls"></header>
@@ -163,25 +162,25 @@
                 </label>
               </div>
               <div class="dimensions">
-                ${TIMELINE_DIMENSIONS.map(dimension => {
-                  const isActive = dimension.value === this.state.dimension;
+                ${
+                  TIMELINE_DIMENSIONS.map(dimension => {
+                    const isActive = dimension.value === this.state.dimension;
 
-                  return html`
-                    <label class="${isActive ? 'is-active' : ''}">
-                      ${dimension.label}
-                      <input
-                        type="radio"
-                        name="dimension"
-                        value="${dimension.value}"
-                        onchange=${this.handleDimensionChange.bind(this)}
-                        checked=${isActive}
-                      />
-                    </label>
-                  `;
-                })}
+                    return html`
+                      <label class="${isActive ? 'is-active' : ''}">
+                        ${dimension.label}
+                        <input
+                          type="radio"
+                          name="dimension"
+                          value="${dimension.value}"
+                          onchange=${this.handleDimensionChange.bind(this)}
+                          checked=${isActive}
+                        />
+                      </label>
+                    `;
+                  })
+                }
               </div>
-              <button class="cf-btn-primary" onclick="${() =>
-                console.log('jooo')}>Sign out</button>
             </section>
           `;
         }
