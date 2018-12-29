@@ -233,35 +233,37 @@
         gapi.analytics.ready(() => {
           window.startAutoResizer();
 
+          gapi.analytics.auth.on('signIn', () => {
+            const timeline = new gapi.analytics.googleCharts.DataChart({
+              reportType: 'ga',
+              chart: {
+                type: 'LINE',
+                container: 'timeline',
+                options: {
+                  width: '100%',
+                  backgroundColor: '#f7f9fa'
+                }
+              }
+            });
+
+            render(
+              html`
+                <${Controls}
+                  isAuthorized=${gapi.analytics.auth.isAuthorized()}
+                  entry=${entry}
+                  timeline=${timeline}
+                  signout=${() => gapi.analytics.auth.signOut()}
+                  ...${parameters.instance}
+                />
+              `,
+              document.querySelector('.controls')
+            );
+          });
+
           gapi.analytics.auth.authorize({
             container: 'auth-button',
             clientid: parameters.instance.clientId
           });
-
-          const timeline = new gapi.analytics.googleCharts.DataChart({
-            reportType: 'ga',
-            chart: {
-              type: 'LINE',
-              container: 'timeline',
-              options: {
-                width: '100%',
-                backgroundColor: '#f7f9fa'
-              }
-            }
-          });
-
-          render(
-            html`
-              <${Controls}
-                isAuthorized=${gapi.analytics.auth.isAuthorized()}
-                entry=${entry}
-                timeline=${timeline}
-                signout=${() => gapi.analytics.auth.signOut()}
-                ...${parameters.instance}
-              />
-            `,
-            document.querySelector('.controls')
-          );
         });
       });
     </script>
