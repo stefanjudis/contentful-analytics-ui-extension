@@ -108,19 +108,52 @@
         { label: 'Week', value: 'week' },
         { label: 'Month', value: 'month' }
       ];
-      const TIMELINE_CONFIG = {
-        reportType: 'ga',
-        chart: {
-          type: 'LINE',
-          container: 'timeline',
-          options: {
-            width: '100%',
-            backgroundColor: '#f7f9fa'
-          }
-        }
-      };
 
       const formatDate = date => date.toISOString().slice(0, 10);
+
+      class Timeline extends Component {
+        componentDidMount() {
+          const timeline = new gapi.analytics.googleCharts.DataChart({
+            reportType: 'ga',
+            chart: {
+              type: 'LINE',
+              container: this.root,
+              options: {
+                width: '100%',
+                backgroundColor: '#f7f9fa'
+              }
+            }
+          });
+        }
+
+        render() {
+          const { range, dimension } = this.props;
+          const { prefix, slugId, viewId } = this.props.parameters;
+
+          if (this.root) {
+            this.state.timeline
+              .set({
+                query: {
+                  ...{
+                    ids: this.props.viewId,
+                    dimensions: `ga:${dimension}`,
+                    metrics: 'ga:sessions',
+                    filters: `ga:pagePath==/${
+                      prefix ? `${prefix}/` : ''
+                    }${entry.fields[slugId].getValue()}/`
+                  },
+                  'start-date': formatDate(range.start),
+                  'end-date': formatDate(range.end)
+                }
+              })
+              .execute();
+          }
+
+          return html`
+            <div ref={ c => this.root=c }>
+          `;
+        }
+      }
 
       class Controls extends Component {
         constructor({ clientId, entry, auth }) {
@@ -161,7 +194,7 @@
 
         render() {
           const { range, isAuthorized } = this.state;
-          const { entry, signout } = this.props;
+          const { entry, auth } = this.props;
 
           if (!isAuthorized) {
             return '';
@@ -199,52 +232,32 @@
                 </label>
               </div>
               <div class="dimensions">
-                ${
-                  TIMELINE_DIMENSIONS.map(dimension => {
-                    const isActive = dimension.value === this.state.dimension;
+                ${TIMELINE_DIMENSIONS.map(dimension => {
+                  const isActive = dimension.value === this.state.dimension;
 
-                    return html`
-                      <label class="${isActive ? 'is-active' : ''}">
-                        ${dimension.label}
-                        <input
-                          type="radio"
-                          name="dimension"
-                          value="${dimension.value}"
-                          onchange=${this.handleDimensionChange.bind(this)}
-                          checked=${isActive}
-                        />
-                      </label>
-                    `;
-                  })
-                }
+                  return html`
+                    <label class="${isActive ? 'is-active' : ''}">
+                      ${dimension.label}
+                      <input
+                        type="radio"
+                        name="dimension"
+                        value="${dimension.value}"
+                        onchange=${this.handleDimensionChange.bind(this)}
+                        checked=${isActive}
+                      />
+                    </label>
+                  `;
+                })}
               </div>
-              <button type="button" onClick=${this.props.signout}>
+              <Timeline
+                range=${this.state.range}
+                dimension=${this.state.dimension}
+                parameters=${this.props.parameters}>
+              <button type="button" onClick=${() => auth.signout()}>
                 sign out
               </button>
             </section>
           `;
-        }
-
-        renderTimeline() {
-          const { entry, prefix, slugId, viewId } = this.props;
-          const { range, dimension } = this.state;
-
-          this.props.timeline
-            .set({
-              query: {
-                ...{
-                  ids: this.props.viewId,
-                  dimensions: `ga:${dimension}`,
-                  metrics: 'ga:sessions',
-                  filters: `ga:pagePath==/${
-                    prefix ? `${prefix}/` : ''
-                  }${entry.fields[slugId].getValue()}/`
-                },
-                'start-date': formatDate(range.start),
-                'end-date': formatDate(range.end)
-              }
-            })
-            .execute();
         }
       }
 
@@ -252,22 +265,15 @@
         gapi.analytics.ready(() => {
           window.startAutoResizer();
 
-          const $controls = document.querySelector('.controls');
-          const timeline = new gapi.analytics.googleCharts.DataChart(
-            TIMELINE_CONFIG
-          );
-
           render(
             html`
               <${Controls}
                 auth=${gapi.analytics.auth}
                 entry=${entry}
-                timeline=${timeline}
-                signout=${() => gapi.analytics.auth.signOut()}
-                ...${parameters.instance}
+                parameters=${parameters.instance}
               />
             `,
-            $controls
+            document.querySelector('.controls')
           );
         });
       });
