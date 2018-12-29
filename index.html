@@ -142,7 +142,11 @@
 
         render() {
           const { range } = this.state;
-          const { entry, signout } = this.props;
+          const { entry, isAuthorized, signout } = this.props;
+
+          if (!isAuthorized) {
+            return '';
+          }
 
           if (!entry.getSys().publishedAt) {
             return html`
@@ -249,6 +253,7 @@
           render(
             html`
               <${Controls}
+                isAuthorized=${gapi.analytics.auth.isAuthorized}
                 entry=${entry}
                 timeline=${timeline}
                 signout=${() => gapi.analytics.auth.signOut()}
