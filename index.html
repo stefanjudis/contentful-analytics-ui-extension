@@ -195,7 +195,7 @@
                   })
                 }
               </div>
-              <button type="button" onClick=${() => console.log('joooo')}>
+              <button type="button" onClick=${this.props.signout}>
                 sign out
               </button>
             </section>
@@ -251,6 +251,7 @@
               <${Controls}
                 entry=${entry}
                 timeline=${timeline}
+                signout=${() => console.log('hello from the outer')}
                 ...${parameters.instance}
               />
             `,
