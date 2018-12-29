@@ -44,7 +44,7 @@
       const DAY_IN_MS = 1000 * 60 * 60 * 24;
       const TODAY = new Date();
 
-      class App extends Component {
+      class Controls extends Component {
         constructor({ entry }) {
           super();
 
@@ -62,7 +62,7 @@
         }
 
         handleDateChange(event) {
-          const { entry, prefix } = this.props;
+          const { entry, prefix, slugId } = this.props;
 
           this.props.timeline
             .set({
@@ -141,7 +141,7 @@
 
           render(
             html`
-              <${App}
+              <${Controls}
                 entry=${entry}
                 timeline=${timeline}
                 ...${parameters.instance}
