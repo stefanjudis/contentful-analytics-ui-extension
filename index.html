@@ -112,9 +112,17 @@
       const formatDate = date => date.toISOString().slice(0, 10);
 
       class Timeline extends Component {
+        constructor() {
+          super();
+
+          this.state = {
+            timeline: null
+          };
+        }
+
         componentDidMount() {
           console.log('mounting', this.root, this.props);
-          this.state = {
+          this.setState({
             timeline: new gapi.analytics.googleCharts.DataChart({
               reportType: 'ga',
               chart: {
@@ -126,19 +134,19 @@
                 }
               }
             })
-          };
+          });
         }
 
-        render() {
-          const { range, dimension } = this.props;
-          const { prefix, slugId, viewId } = this.props.parameters;
+        render(props, state) {
+          const { range, dimension } = props;
+          const { prefix, slugId, viewId } = props.parameters;
 
-          if (this.root) {
-            this.state.timeline
+          if (state.timeline) {
+            state.timeline
               .set({
                 query: {
                   ...{
-                    ids: this.props.viewId,
+                    ids: viewId,
                     dimensions: `ga:${dimension}`,
                     metrics: 'ga:sessions',
                     filters: `ga:pagePath==/${
