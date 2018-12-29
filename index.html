@@ -251,7 +251,7 @@
               <${Controls}
                 entry=${entry}
                 timeline=${timeline}
-                signout=${() => console.log('hello from the outer')}
+                signout=${() => gapi.analytics.auth.signOut()}
                 ...${parameters.instance}
               />
             `,
