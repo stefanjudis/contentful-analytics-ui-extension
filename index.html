@@ -51,6 +51,8 @@
         ({ entry, parameters, window: extWindow }) => {
           extWindow.startAutoResizer();
 
+          console.log(entry);
+
           render(
             html`
               <${App} />
