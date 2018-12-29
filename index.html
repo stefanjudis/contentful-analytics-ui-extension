@@ -62,7 +62,7 @@
               start: new Date(TODAY - DAY_IN_MS * 14),
               end: TODAY
             },
-            dimention: 'day',
+            dimension: 'day',
             entry
           };
 
@@ -132,6 +132,7 @@
                           name="dimension"
                           value="${dimension}"
                           onchange=${this.handleDimensionChange.bind(this)}
+                          checked=${dimension === this.state.dimension}
                         />
                       </label>
                     `
