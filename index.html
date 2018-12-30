@@ -87,6 +87,20 @@
         border-left: 1px solid #ccc;
       }
 
+      .info {
+        display: flex;
+        align-items: center;
+        padding: 1em 0;
+        font-size: 0.75em;
+      }
+
+      .info svg {
+        width: 1.5em;
+        height: 1.5em;
+        min-width: 1.5em;
+        margin-right: 0.5em;
+      }
+
       .signout {
         text-align: right;
       }
@@ -170,7 +184,7 @@
 
           return html`
             <div>
-              <div>
+              <div class="info">
                 <svg
                   fill="#2D2F31"
                   width="100pt"
