@@ -49,7 +49,7 @@ The UI extension runs in an iframe and to make the OAuth work you have to author
 
 ![Configuration for OAuth client](./oauth-client-configuration.jpg)
 
-Copy and paste the client ID because you'll need it to configure the UI extension in Contentful.
+**Copy and paste the client ID because you'll need it to configure the UI extension in Contentful.**
 
 ## Enable and configure Analytics API
 
@@ -57,4 +57,17 @@ Head over the [the Library explorer](https://console.developers.google.com/apis/
 
 ![Enabled analytics API](./analytics-api.jpg)
 
+The Analytics API will allow access via the project wide OAuth client.
+
 ## Configure Analytics UI extension
+
+Go to the content type in Contentful that should include Analytics API data. Create a new `Boolean` field (UI extensions have to be tied to a field). Set the appearance to be `Contentful Analytics Extension`.
+
+This configuration parameters for the extension are as follows.
+
+- Analytics client ID – thats the ID of the OAuth application you just created
+- Analytics view ID - the view ID which you can get in Google Analytics
+- URL path prefix - currently it's not possible to access preview URLs in Contentful. For my use-case a path prefix does the job to e.g. create a preview URL like `stefanjudis.com/today-i-learned/something`
+- Slug Field ID – the field that will be used for URL generation in your application
+
+![UI-extension configuration](./extension-field-configuration.jpg)
