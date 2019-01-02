@@ -6,7 +6,7 @@
 
 ## Getting started
 
-To to authorize the Google Analytics API several steps are needed. Head to the [SETUP.md](./SETUP.md) for all the instructions. :)
+To to authorize the Google Analytics API several steps are needed. Head to the [SETUP.md](./setup/index.md) for all the instructions. :)
 
 ## Functionality
 
