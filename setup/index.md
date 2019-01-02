@@ -3,8 +3,8 @@
 To make use of Google Analytics Embed API in Contentful you have to perform two steps:
 
 1. Install the UI-extension
-2. Create new Analytics application
-3. Configure Analytics application
+2. Create new Google APIs project
+3. Enable and configure Analytics API
 4. Configure Analytics UI extension
 
 ## Install the UI extension
@@ -33,8 +33,28 @@ $ npm run create -- --space-id XXX
 
 The `npm run create` command uses the [Contentful CLI](https://www.npmjs.com/package/contentful-cli). This approach is recommended when you want to develop this extension.
 
-## Create new Analytics application
+## Create new Google APIs project
 
-## Configure Analytics application
+To use the Analytics Embed API you have to create a new application in [the Google API Console](https://console.developers.google.com/project).
+
+Click "Create Project" (if you don't have a project yet) and give the project a name.
+
+![Project creation in the Google API Console](./project-setup.jpg).
+
+Create new OAuth Client credentials for this Project.
+
+![OAuth client creation dialog](./oauth-client.jpg)
+
+The UI extension runs in an iframe and to make the OAuth work you have to authorize the source of the application which is `https://contentful-analytics.netlify.com`.
+
+![Configuration for OAuth client](./oauth-client-configuration.jpg)
+
+Copy and paste the client ID because you'll need it to configure the UI extension in Contentful.
+
+## Enable and configure Analytics API
+
+Head over the [the Library explorer](https://console.developers.google.com/apis/library?q=analytics%20api) and enable the `Analytics API`.
+
+![Enabled analytics API](./analytics-api.jpg)
 
 ## Configure Analytics UI extension
