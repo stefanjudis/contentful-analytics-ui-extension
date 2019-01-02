@@ -9,14 +9,14 @@
       {
         "id": "clientId",
         "name": "Analytics Client ID",
-        "description": "Client ID to access Google analytics -> ",
+        "description": "Client ID to access Google analytics",
         "type": "Symbol",
         "required": true
       },
       {
         "id": "viewId",
         "name": "Analytics View ID",
-        "description": "View ID to access Google analytics -> ",
+        "description": "View ID to access Google analytics",
         "type": "Symbol",
         "required": true
       },
